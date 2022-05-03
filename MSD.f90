@@ -10,7 +10,7 @@ PROGRAM MSD
     INTEGER, DIMENSION(:), ALLOCATABLE :: n_atoms
     REAL*8, dimension(3,3) :: bravais
     REAL*8, DIMENSION(:,:,:), ALLOCATABLE :: conf
-    REAL*8 len1, len2, len3, volume, jami
+    REAL*8 len1, len2, len3, volume, s
 
 
 ! Prompt the user for system specific information
@@ -84,13 +84,13 @@ PROGRAM MSD
 	DO n = 1, n_element
 		OPEN(1, FILE = names(n), STATUS = 'new')
 			DO t=2, end_t-start_t
-				jami=0
+				s = 0
 				DO atom = i, i + n_atoms(n) - 1
-					jami = jami + (br(1,1) * conf(t, atom, 1) - br(1,1) * conf(1, atom, 1)) ** 2 + &
-					(br(2,2) * conf(t, atom, 2) - br(2,2) * conf(1, atom, 2)) ** 2 + &
-					(br(3,3) * conf(t, atom, 3) - br(3,3) * conf(1, atom, 3)) ** 2 
+					jami = jami + (br(1, 1) * conf(t, atom, 1) - br(1, 1) * conf(1, atom, 1)) ** 2 + &
+					(br(2, 2) * conf(t, atom, 2) - br(2, 2) * conf(1, atom, 2)) ** 2 + &
+					(br(3, 3) * conf(t, atom, 3) - br(3, 3) * conf(1, atom, 3)) ** 2 
 				END DO
-				WRITE(1,*) t, jami / n_atoms(n)
+				WRITE(1,*) t, s / n_atoms(n)
 			END DO
 			i = i + n_atoms(n)
 	END DO
